@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: little-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: little-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: little-frontend
+    spec:
+      containers:
+        - name: little-frontend
+          image: chenwuchi/demo-little-frontend
+          ports:
+            - containerPort: 80
+          env:
+            - name: SPRING_CUSTOMER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-api-configmap
+                  key: spring-customer-url
+            - name: SPRING_ORDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-api-configmap
+                  key: spring-order-url
+# three dash for document seperation
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: little-frontend-service
+spec:
+  selector:
+    app: little-frontend
+  type: LoadBalancer # Assign service an external IP address and accept external request
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30003 # Port for external IP address (must be between 30000-32767)

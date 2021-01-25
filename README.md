@@ -37,3 +37,34 @@ $ docker exec -it <spring container id> /bin/sh
 $ kubectl exec -it <pods name of spring apps> -- sh
 
 ```
+
+## Deploying backend apps using k8s
+
+```
+$ docker build -f ./frontend/Dockerfile -t demo-little-frontend .
+$ docker login & tag & push ...
+
+# Front end server
+$ kubectl apply -f ./deployment/frontend/spring-api-configmap.yaml
+$ kubectl apply -f ./deployment/frontend/little-frontend.yaml
+```
+
+### Check deploying result of frontend apps
+
+```
+$ kubectl get pods
+$ kubectl logs <pod name>
+
+# With docker CLI
+$ docker exec -it <minikube container id> /bin/bash
+$ docker exec -it <nginx container id> /bin/bash
+
+# With kubectl CLI
+$ kubectl exec -it <pods name of nginx apps> -- bash
+```
+
+### Expose service with minikube
+
+```
+$ minikube service little-frontend-service
+```

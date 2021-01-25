@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro-services demo</title>
+
+    <!-- Bootstrap style -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-title">
+            Customer Order App
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="customer-section">
+            <div class="service-title">Customer Service</div>
+
+            <div class="container">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#customerModal">
+                    Add Customer
+                </button>
+
+                <table class="table my-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Customer Name</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="customers-table-body">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerModalLabel">Add New Customer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="fc-customer-name" class="form-control" placeholder="Customer name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                            <button type="button" id="add-customer-btn-confirm" class="btn btn-dark">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-section mt-5">
+            <div class="service-title">Order Service</div>
+
+            <div class="container">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#orderModal">
+                    Add Order
+                </button>
+
+                <table class="table my-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Order Description</th>
+                            <th scope="col">Customer Id</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="order-table-body">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="orderModalLabel">Add New Order</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="fc-order-description" class="form-control mb-3"
+                                placeholder="Order description">
+
+                            <select id="fc-order-customers-dropdown" class="form-control form-select">
+                                <option value="" selected disabled>Select customer</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                            <button type="button" id="add-order-btn-confirm" class="btn btn-dark">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <!-- Propper -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom script -->
+    <script src="./bundle.js"></script>
+
+</body>
+
+</html>
