@@ -1,0 +1,8 @@
+# Use config map for not-secret configuration data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  # name of database service <mysqldb.yaml>
+  mysql-url: mysqldb-service

@@ -1,0 +1,7 @@
+# Use config map for not-secret configuration data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-customer-configmap
+data:
+  spring-customer-url: spring-customer-service

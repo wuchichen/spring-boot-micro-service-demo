@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-order-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-order
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: spring-order
+    spec:
+      containers:
+        - name: spring-order
+          image: chenwuchi/demo-spring-k8s-order
+          ports:
+            - containerPort: 9092
+          env:
+            - name: MYSQL_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: password
+            - name: MYSQL_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: database
+            - name: MYSQL_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: mysql-url
+            - name: SPRING_CUSTOMER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: spring-customer-configmap
+                  key: spring-customer-url
+# three dash for document seperation
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-order-service
+spec:
+  selector:
+    app: spring-order
+  type: LoadBalancer # Assign service an external IP address and accept external request
+  ports:
+    - protocol: TCP
+      port: 9092
+      targetPort: 9092
+      nodePort: 30002 # Port for external IP address (must be between 30000-32767)

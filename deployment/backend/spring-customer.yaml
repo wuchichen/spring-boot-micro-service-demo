@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-customer-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-customer
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: spring-customer
+    spec:
+      containers:
+        - name: spring-customer
+          image: chenwuchi/demo-spring-k8s-customer
+          ports:
+            - containerPort: 9091
+          env:
+            - name: MYSQL_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: password
+            - name: MYSQL_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mysqldb-secret
+                  key: database
+            - name: MYSQL_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: mysql-url
+# three dash for document seperation
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-customer-service
+spec:
+  selector:
+    app: spring-customer
+  type: LoadBalancer # Assign service an external IP address and accept external request
+  ports:
+    - protocol: TCP
+      port: 9091
+      targetPort: 9091
+      nodePort: 30001 # Port for external IP address (must be between 30000-32767)
